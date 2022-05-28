@@ -1,6 +1,6 @@
 {
   "name": "@dioxide-js/event-emiter",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple event-emiter",
   "keywords": [
     "events",
