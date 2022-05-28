@@ -1,0 +1,4 @@
+tools/* linguist-vendored=false
+*.js    eol=lf
+*.ts    eol=lf
+*.json  eol=lf

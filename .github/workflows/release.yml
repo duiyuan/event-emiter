@@ -1,0 +1,48 @@
+name: Npm Publish CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.jobs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12
+          registry-url: 'https://registry.npmjs.org'
+          scope: '@dioxide-js'
+
+      - name: Configure committer
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
+      - name: Install & Build & Test
+        run: |
+          yarn install --frozen-lockfile --registry=https://registry.npmmirror.com/
+          npm run build --if-present
+          npm test --if-present
+
+      - name: Make Tag & Update change.log
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo 'print secrets.GITHUB_TOKEN ${{ secrets.GITHUB_TOKEN }}'
+          npx standard-version
+          git push --follow-tags origin main
+
+      - name: Npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo 'print secrets.NPM_TOKEN ${{ secrets.NPM_TOKEN }}'
+          yarn publish --access public
