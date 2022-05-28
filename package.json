@@ -1,6 +1,6 @@
 {
   "name": "@dioxide-js/event-emiter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Simple event-emiter",
   "keywords": [
     "events",
@@ -86,10 +86,10 @@
     "jest": "^23.6.0",
     "jest-config": "^23.6.0",
     "lint-staged": "^8.0.0",
+    "lodash.camelcase": "^4.3.0",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "rollup": "^0.67.0",
-    "lodash.camelcase": "^4.3.0",
     "rollup-plugin-commonjs": "^9.1.8",
     "rollup-plugin-json": "^3.1.0",
     "rollup-plugin-node-resolve": "^3.4.0",
