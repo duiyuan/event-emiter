@@ -11,10 +11,14 @@ describe('event-emiter test suite', () => {
     const ee = new EventEmiter()
     const name = 'custom_event'
     let count = 0
-    ee.on(name, (data) => {
-      expect(data === count).toBeTruthy()
-      count += 1
-    })
+    ee.on(
+      name,
+      (data) => {
+        expect(data === count).toBeTruthy()
+        count += 1
+      },
+      { once: true }
+    )
     for (let i = 0; i < 2; i += 1) {
       ee.emit(name, i)
     }
@@ -36,7 +40,7 @@ describe('event-emiter test suite', () => {
     const callback = (data: any) => {
       expect(data === payload).toBeTruthy()
     }
-    ee.on(name, callback)
+    ee.on(name, callback, { once: false })
     expect(ee.events[name].length).toBe(1)
     ee.off(name, callback)
     expect(ee.events[name].length).toBe(0)
@@ -49,9 +53,13 @@ describe('event-emiter test suite', () => {
     let i = 0
     let max = 10
     while (i < 10) {
-      ee.on(name, (data: any) => {
-        expect(data === payload).toBeTruthy()
-      })
+      ee.on(
+        name,
+        (data: any) => {
+          expect(data === payload).toBeTruthy()
+        },
+        { once: false }
+      )
       i += 1
     }
 
@@ -67,9 +75,13 @@ describe('event-emiter test suite', () => {
     let i = 0
     let max = 10
     while (i < 10) {
-      ee.on(name, (data: any) => {
-        expect(data === payload).toBeTruthy()
-      })
+      ee.on(
+        name,
+        (data: any) => {
+          expect(data === payload).toBeTruthy()
+        },
+        { once: false }
+      )
       i += 1
     }
 
@@ -82,9 +94,13 @@ describe('event-emiter test suite', () => {
     const ee = new EventEmiter()
     const name = 'custom_event'
 
-    const unbind = ee.on(name, (data: any) => {
-      expect(data === payload).toBeTruthy()
-    })
+    const unbind = ee.on(
+      name,
+      (data: any) => {
+        expect(data === payload).toBeTruthy()
+      },
+      { once: false }
+    )
 
     expect(ee.events[name]).toHaveLength(1)
     unbind()
@@ -95,9 +111,13 @@ describe('event-emiter test suite', () => {
     const ee = new EventEmiter()
     const name = 'custom_event'
 
-    ee.on(name, (data: any) => {
-      expect(data === payload).toBeTruthy()
-    })
+    ee.on(
+      name,
+      (data: any) => {
+        expect(data === payload).toBeTruthy()
+      },
+      { once: false }
+    )
 
     expect(ee.emit(name, payload)).toBe(true)
     expect(ee.emit(name + '_expected', payload)).toBe(false)
